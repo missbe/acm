@@ -1,0 +1,106 @@
+﻿Problem Description
+FatMouse prepared M pounds of cat food, ready to trade with the cats guarding the warehouse containing his favorite food, JavaBean.
+The warehouse has N rooms. The i-th room contains J[i] pounds of JavaBeans and requires F[i] pounds of cat food. FatMouse does not have to trade for all the JavaBeans in the room, instead, he may get J[i]* a% pounds of JavaBeans if he pays F[i]* a% pounds of cat food. Here a is a real number. Now he is assigning this homework to you: tell him the maximum amount of JavaBeans he can obtain.
+
+ 
+
+Input
+The input consists of multiple test cases. Each test case begins with a line containing two non-negative integers M and N. Then N lines follow, each contains two non-negative integers J[i] and F[i] respectively. The last test case is followed by two -1's. All integers are not greater than 1000.
+
+ 
+
+Output
+For each test case, print in a single line a real number accurate up to 3 decimal places, which is the maximum amount of JavaBeans that FatMouse can obtain.
+
+ 
+
+Sample Input
+5 3
+7 2
+4 3
+5 2
+20 3
+25 18
+24 15
+15 10
+-1 -1
+ 
+
+Sample Output
+13.333
+31.500
+//CODE
+
+import java.io.BufferedInputStream;
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main {
+
+    private static Scanner cin = new Scanner(new BufferedInputStream(System.in));
+    private static int n, m;
+    private static Mouse[] node;
+
+    public static void main(String[] args) {
+        double sum;
+        while (true) {
+            n = cin.nextInt();
+            m = cin.nextInt();
+            if (n + m == -2) {
+                break;
+            }
+            sum = 0;
+            node = new Mouse[m];
+            for (int i = 0; i < m; i++) {
+                node[i] = new Mouse(cin.nextInt(), cin.nextInt());
+            }
+            Arrays.sort(node);
+            for (int i = 0; i < m && n > 0; i++) {
+                if (n > node[i].J) {
+                    n -= node[i].J;
+                    sum += node[i].F;
+                } else {
+                    sum += n * 1.0 / node[i].J * node[i].F;
+                    n = 0;
+                }
+            }
+            System.out.printf("%.3f", sum);// 直接加\n竟然PE了， 需要\r\n或者加上下面一行
+            System.out.println();
+        }
+    }
+}
+class Mouse implements Comparable<Mouse> {
+    int F;
+    int J;
+    double velu;//最便宜的
+
+    public double getVelu() {
+        return velu;
+    }
+
+    public void setVelu(double velu) {
+        this.velu = velu;
+    }
+
+    public Mouse(int f, int j) {
+        this.F = f;
+        this.J = j;
+        this.velu=1.0*f/j;
+    }
+
+    public int getF() {
+        return F;
+    }
+
+    public int getJ() {
+        return J;
+    }
+
+    @Override
+    public int compareTo(Mouse o) {
+        // TODO Auto-generated method stub
+        return this.velu < o.getVelu() ? 1 : -1;
+    }
+
+
+}

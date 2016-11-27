@@ -1,0 +1,37 @@
+Description
+
+Here is a simple game. In this game, there are several piles of matches and two players. The two player play in turn. In each turn, one can choose a pile and take away arbitrary number of matches from the pile (Of course the number of matches, which is taken away, cannot be zero and cannot be larger than the number of matches in the chosen pile). If after a player’s turn, there is no match left, the player is the winner. Suppose that the two players are all very clear. Your job is to tell whether the player who plays first can win the game or not.
+Input
+
+The input consists of several lines, and in each line there is a test case. At the beginning of a line, there is an integer M (1 <= M <=20), which is the number of piles. Then comes M positive integers, which are not larger than 10000000. These M integers represent the number of matches in each pile.
+Output
+
+For each test case, output "Yes" in a single line, if the player who play first will win, otherwise output "No".
+Sample Input
+
+2 45 45
+3 3 6 9
+Sample Output
+
+No
+Yes
+//code
+#include<cstdio>
+/*【1】如果游戏只有一堆火柴，游戏人I直接取走胜利
+【2】有两堆火柴，数量是N和M，如果N不等于M，游戏人I胜利，反之II胜利。
+【3】任意堆数推出平衡概念，当一方处于平衡状态另一方可以改变使达到非
+平衡状态，若开始为平衡状态游戏人I胜利，反之II胜利。用异或实现，每一
+堆进行异或结果为平衡则胜利。
+*/
+int main(){
+	int n;
+	while(scanf("%d",&n)!=EOF){//输入火柴堆数
+		int a=0,b,i;
+		for(i=0;i<n;i++){
+		   scanf("%d",&b);///输入每堆火柴数量
+		   a ^= b; ////异或当前堆的火柴数平衡性只与二进制有关
+		}
+		printf("%s\n",a ? "Yes":"No");///a出现非平衡位胜利
+	}
+	return 0;
+}
