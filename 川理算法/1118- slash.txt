@@ -1,0 +1,103 @@
+﻿题目描述
+The American English slash (/) is a punctuation mark. In the early modern period, in the Fraktur script, which was widespread through Europe in the Middle Ages, one slash(/) represented a comma, while two slashes (//) represented a dash.
+With the wide use of computers, slash appeared far more than at any previous time in history. On Unix-like systems and in URLs, the slash is to separate directory and file components of a path:
+/home/whuacm/chaeyeon/Sherlockpp.jpg
+http://acm.whu.edu.cn/
+But in Windows systems, it uses (\) to separate directory and file components of a path:
+C:\Users\v-yungao\Music\Shake
+That really confuses me. Could you help me to judge if the string I wrote is right. 
+Please notice that I would only make a mistake by changing (\) to (/) or (/) to (\). All the strings were constituted by a-z, A-Z, 0-9, (.) , (\) and (/), no other characters would appear in the strings.
+A string of URL always begins with “[a-zA-Z]+://” (Notice (/) maybe changed to (\) ), in which “[a-zA-Z]+” represents any non-empty string of letters.
+Windows path begins with “[a-zA-Z]:\” (Notice (\) maybe changed to (/)), in which “[a-zA-Z]” means an English letter. (e.g. “C:\\windows” is a URL not a Windows path)
+The path of Unix-like system begins with (/) or (\).
+I’ll give you some strings, can you tell me which type those strings belong to and those correct forms.
+
+输入
+The first line consists of an integer T, indicating the number of strings.
+The next T lines, each line consists of a single non-empty string. All of those are really data from our daily life.
+
+输出
+For each string:
+If it belongs to a path in Unix-like systems, output “It’s a path in Unix-like systems!” in a new line and the correct string in the next line.
+If it belongs to a path in Windows system, output “It’s a path in Windows system!” in a new line and the correct string in the next line.
+If it’s a URL, output “It’s a URL!” in a new line and the correct string in the next line.
+The kind of each input string can be uniquely determined. 
+
+Constrains
+0 < T <= 20
+The length of each string will not be longer than 50.
+
+样例输入
+4
+http://acm.suse.edu.cn/admin/
+http:/\acm.suse.edu.cn/11111011001/
+\home\usr\Slash\test
+Z:\movie/lx
+
+样例输出
+It's a URL!
+http://acm.suse.edu.cn/admin/
+It's a URL!
+http://acm.suse.edu.cn/11111011001/
+It's a path in Unix-like systems!
+/home/usr/Slash/test
+It's a path in Windows system!
+Z:\movie\lx
+//CODE
+#include<cstdio>
+int flag;
+
+void rule(char *ch,char ex,char temp){
+    int i;
+	for(i=0;ch[i]!='\0';i++)
+		if(ch[i]==ex)
+			ch[i]=temp;
+//	printf("%s\n",ch);
+}
+int main(){
+	int count;
+	char ch[101];
+	int i;
+
+	scanf("%d",&count);
+	while(count--){
+		scanf("%s",ch);
+		for(i=0;ch[i]!='\0';i++){
+			if(ch[i]==':'){
+				if((ch[i+1]=='\\' || ch[i+1]=='/')&&(
+					ch[i+2]=='\\' || ch[i+1]=='/')){
+				   flag=1;//url
+				   break;
+				}
+				if(ch[i+1]=='\\' || ch[i+1]=='/'){
+					flag=3;///windows
+				    break;
+				}
+			}
+			if(ch[i]=='/' || ch[i]=='\\'){
+				flag=2;///unix
+				break;
+			}
+			/*if(){
+				flag=3;
+				break;
+			}*/
+		}//end for
+		switch(flag){
+	     case 1:
+		   printf("It's a URL!\n");
+		   rule(ch,'\\','/');////url
+		   break;
+	     case 2:
+		   printf("It's a path in Unix-like systems!\n");
+		   rule(ch,'\\','/');////unix
+		   break;
+	     case 3:
+		   printf("It's a path in Windows system!\n");
+		   rule(ch,'/','\\');///window
+		   break;
+		}
+		printf("%s\n",ch);
+	}
+	return 0;
+}

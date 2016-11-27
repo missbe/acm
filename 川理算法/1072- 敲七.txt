@@ -1,0 +1,41 @@
+﻿题目描述
+输出7和7的倍数，还有包含7的数字例如（17，27，37...70，71，72，73...）
+
+输入
+每行一个整数N。(N不大于30000)。处理到文件结束（END OF FILE）。
+
+输出
+从小到大排列的不大于N的与7有关的数字，每行一个。
+
+样例输入
+15
+20
+样例输出
+7
+14
+7
+14
+17
+
+//CODE
+#include<cstdio>
+ int main(){
+	 int num,temp,i;
+	 while(scanf("%d",&num)!=EOF){
+		 for(i=7;i<num;i++){
+			 if(0==i%7){
+				 printf("%d\n",i);
+				 continue;
+			 }
+			 temp=i;
+			 while(temp){
+				 if(7==temp%10){
+					 printf("%d\n",i);
+					 break;
+				 }
+				 temp /= 10;
+			 }
+		 }
+	 }
+	 return 0;
+ }

@@ -1,0 +1,114 @@
+﻿题目描述
+Using these N natural number 1…N to make up a large number in sequence, such as 123456789101112 when N is 12, and you are asked to delete M (M<N) number from the large number to get the biggest number remain.
+
+输入
+The input contains multiple test cases, each contains two integer N (2≤N≤1000) and M, input end with 0.
+输出
+For each test case, print one number each line
+
+样例输入
+12  3
+12  9
+20  15
+30  18
+0
+
+样例输出
+456789101112
+911112
+9314151617181920
+945161718192021222324252627282930
+//CODE
+#include<cstdio>
+#include<cstdlib>
+#include<cassert>
+
+int main(){
+	char ch[4000],number[10];
+	int N,M,temp;
+	int i,j,k,m;//count
+	int ch_sub=0,num_sub=0,count;
+	int a,b,c;
+	
+	while(scanf("%d",&N) && N!=0){
+	
+		scanf("%d",&M);
+		assert(M < N);
+		assert(N>=2 && N<=1000);
+		if(N<=9){
+			count=N;
+		}else if(N>=10 && N<=99){
+			count=9+(N-9)*2;
+		}else if(N>=100 && N<=999){
+		     count=(N-99)*3+90*2+9;
+		}else if(N>=1000){
+			 count=(N-999)*4+900*3+90*2+9;
+		}
+
+		ch_sub=0,num_sub=0;
+		for(i=1;i<=N;i++){
+			if(i<=9)
+				ch[ch_sub++]=(char)(i+48);
+			else{
+				temp=i;
+				num_sub=0;
+				while(temp){
+					number[num_sub++]=(char)(temp%10+48);
+					temp /= 10;
+				}
+				for(k=num_sub-1;k>=0;k--)
+					ch[ch_sub++]=number[k];
+			}		
+		}
+
+	  ////To Deal With
+	  for(i=0;M>0 && i< count;i++){
+		 m=i;
+		 while(ch[m]<0){
+			 m++;
+		 }
+		 a=ch[m];
+		 j=m+1;
+		 while(ch[j]<0){
+		   j++;
+		 }		
+		 b=ch[j];
+		 k=j+1;
+		 while(ch[k]<0){
+		     k++;
+		 }
+		 c=ch[k];
+	     if(a=='9')
+			 continue;
+		 if(b > a){
+			 ch[m]=-1;
+			 M--;
+		 }else if(b==a){
+			 if(c<a){
+				 ch[k]=-1;
+				 i--;
+			 }else{
+				 ch[m]=-1;
+			 }
+			 M--;
+		 }else{
+			 if(c<b){
+				 ch[k]=-1;
+			 }else{
+				 ch[j]=-1;
+			 }
+			 i--;
+			 M--;
+		 }//end if
+		 
+	  }//for
+	  ////show result
+	  for(i=0;i<count;i++){
+		  if(ch[i]!=-1){
+			  printf("%c",ch[i]);
+		  }
+	  }///for assignment
+	  printf("\n");
+	}//while
+	return 0;
+}

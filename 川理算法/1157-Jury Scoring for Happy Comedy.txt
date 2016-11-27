@@ -1,0 +1,45 @@
+﻿题目描述
+Happy Comedy is a popular variety show, and there are jury scoring for contestants. The scoring rules is removing a maximum and a minimum score, then an average score could be calculated for every contestants. Please program for outputting the score of one contestant.
+
+输入
+Please input several groups of scoring data, and each group with a row. The first number n(2<n<100) of each row represents the number of jury, the follow are scores from the jury.
+
+输出
+Please output a score for each group with a row, and the result is accurate to two decimal places. 
+
+样例输入
+6 99.2 98.3 97.1 96.2 97 95.3 
+4 100 99 98 97
+样例输出
+97.15
+98.50
+//CODE
+#include<cstdio>
+
+int main(){
+	int N,i;
+	float num,sum;
+	float *p;
+	float max,min;
+	while(scanf("%d",&N)!=EOF){
+		p=new float[N];
+		for(i=0;i<N;i++){
+			scanf("%f",&num);
+			p[i]=num;
+		}
+		max=-9999;
+		min=99999;
+		sum=0;
+		for(i=0;i<N;i++){
+			if(max<p[i])
+				max=p[i];
+			if(min>p[i])
+				min=p[i];
+			sum += p[i];
+		}
+		sum = sum-max-min;
+		printf("%.2f\n",sum/(N-2));
+
+	}
+	return 0;
+}

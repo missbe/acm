@@ -1,0 +1,75 @@
+﻿题目描述
+Give two positive integers n and k, and then input n integers. Now find out the every biggest and no-repeat number from the subsequence which consist of the next continuous k numbers , and print “Nothing” if there has not such number. Fox example: Input
+n,k is :
+5  3
+and then n integers: 
+1 2 2 3 3
+So, All these subsequences that contains 3 numbers are:
+1 2 2
+2 2 3
+2 3 3
+and their biggest and no-repeat number is 1, 3, 2 respectively .
+输入
+The first line contains two positive integers n and k (1≤n≤105, 1≤k≤n) — the number of array elements and the length of the segment.
+Then follow n lines: the i-th one contains a single number ai (-106≤ai≤106).
+输出
+Print n–k + 1 numbers, one per line: on the i-th line print of the maximum number of those numbers from the sub-array ai ai + 1 … ai + k - 1 that occur in this sub-array exactly 1 time. If there are no such numbers in this sub-array, print "Nothing".
+
+样例输入
+6  3
+1
+2
+2
+2
+5
+3
+
+样例输出
+1
+Nothing
+5
+5
+//CODE
+#include<cstdio>
+
+int main()
+{
+	int n,k;
+	int i,j,m,index=0,max=-1;
+	int *p,*num;
+	bool flag=true;
+
+	scanf("%d %d",&n,&k);
+	p=new int[k];
+	num=new int[n];
+	for(i=0;i<n;i++){
+		scanf("%d",&num[i]);
+	}
+	for(i=0;i<n-k+1;i++){
+			index=0;
+		for(j=i;index<3;j++){
+		     p[index++]=num[j];
+		}
+		for(j=0;j<k;j++){
+			for(m=j+1;m<k;m++)
+				if(p[m]==p[j]){
+					flag=false;
+					p[m]=-1;
+				}
+			if(!flag)
+				p[j]=-1;
+			flag=true;
+		}
+		max=-1;
+		for(j=0;j<k;j++){
+			if(p[j]!=-1 && max<p[j]){
+				max=p[j];
+			}
+		}
+		if(max==-1)
+			printf("Nothing\n");
+		else
+			printf("%d\n",max);
+	}
+	return 0;
+}

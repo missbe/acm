@@ -1,0 +1,50 @@
+﻿题目描述
+The highest building in our city has only one elevator. A request list is made up with N positive numbers. The numbers denote at which floors the elevator will stop, in specified order. It costs 6 seconds to move the elevator up one floor, and 4 seconds to move down one floor. The elevator will stay for 5 seconds at each stop.
+
+For a given request list, you are to compute the total time spent to fulfill the requests on the list. The elevator is on the 0th floor at the beginning and does not have to return to the ground floor when the requests are fulfilled.
+
+输入
+There are multiple test cases. Each case contains a positive integer N, followed by N positive numbers. All the numbers in the input are less than 100. A test case with N = 0 denotes the end of input. This test case is not to be processed.
+
+输出
+Print the total time on a single line for each test case.
+
+样例输入
+1 2
+3 2 3 1
+0
+样例输出
+17
+41
+//CODE
+#include<cstdio>
+
+int main(){
+	int N;
+	int i;
+	int *p,temp;
+	int sum,previous;
+
+	while(scanf("%d",&N) && N!=0){
+		p=new int[N];
+		for(i=0;i<N;i++){
+			scanf("%d",&temp);
+			p[i]=temp;
+		}
+		previous=p[0];
+		sum=0;
+		sum=sum+p[0]*6+5;
+		for(i=1;i<N;i++){
+			if(p[i]-previous>0){
+				sum += (p[i]-previous)*6+5;
+			}else if(p[i]-previous<0){
+				sum += (previous-p[i])*4+5;
+			}else{
+				sum += 5;
+			}
+			previous=p[i];
+		}
+		printf("%d\n",sum);
+	}
+	return 0;
+}

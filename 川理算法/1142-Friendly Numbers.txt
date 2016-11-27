@@ -1,0 +1,47 @@
+﻿题目描述
+Friendly numbers is another name of the amicable numbers. There are 2 integers a and b, if a equal to the sum of b’s factors that excluding b-self, and b equal to the sum of a’s factors that excluding a-self, then a and b are a pair of amicable numbers. It’s just like the friendship between two different numbers.
+For example, all factors of number 220, excluding itself, are 1, 2, 4, 5, 10, 11, 20, 22, 44, 55, 110, add the other factors: 1+2+4+5+10+11+20+22+44+55+110 = 284;
+Meanwhile, all factors of number 284, excluding itself, are 1, 2, 4, 71, 142, add the other factors:   1+2+4+71+142 = 220.
+    Now, you could program to judge the numbers, which are given and less than 105, are a pair of friendly numbers or not.
+
+输入
+An integer m is input indicates how many pair of numbers, and the each follow line including 2 numbers to be judged.
+
+输出
+If the given numbers are friendly numbers, output a character “yes”, otherwise output “no”.
+
+样例输入
+3
+5020  5564
+6232 6367
+79750  88730
+样例输出
+yes
+no
+yes
+///CODE
+#include<cstdio>
+
+int main()
+{
+	int m,n,num;
+	int i,k,j;
+	int sum_M=0,sum_N=0;
+
+	scanf("%d",&num);
+	for(i=0;i<num;i++){
+		sum_M=0,sum_N=0;
+		scanf("%d %d",&m,&n);
+		for(j=1;j<m;j++)
+			if(0==m%j)
+			  sum_M += j;
+		for(k=1;k<n;k++)
+			if(0==n%k)
+				sum_N += k;
+		if(m==sum_N && n==sum_M)
+			printf("yes\n");
+		else
+			printf("no\n");
+	}
+	return 0;
+}

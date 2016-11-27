@@ -1,0 +1,52 @@
+﻿题目描述
+Give two integer M , N, and the decimal digits P ( 1<=P<10000) , calculate the result of M/N, 
+and print the number lies in P position of the result. Print 0 if the result does not contain so many decimal digits
+
+输入
+The first line is the number N , means N line.
+The next N line will consist of  3 number every line.
+输出
+The number at P every line.
+样例输入
+3
+89  39  7
+789  13  256
+9  3  6
+样例输出
+2
+3
+0
+//CODE
+#include<cstdio>
+
+int main(){
+	int M,N,P;
+	int count;
+	int temp,temp_div;
+	int div,i;
+
+	scanf("%d",&count);
+	while(count--){
+		scanf("%d %d %d",&M,&N,&P);
+		temp=M%N;
+		div=M/N;
+		for(i=0;i<P;i++){
+			temp *=10;
+			if(temp>N){
+				temp_div=temp;
+				temp = temp_div%N;
+				div=temp_div/N;
+	//			printf("Temp:%d DIV:%d\n",temp,div);
+			}
+			if(temp==0){
+				div=0;
+				break;
+			}
+		}
+		printf("%d\n",div);
+//		printf("%.16f\n",M*1.0/N);
+		
+	}
+		
+	return 0;
+}

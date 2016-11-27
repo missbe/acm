@@ -1,0 +1,50 @@
+﻿题目描述
+Andy和Mary养了很多猪。他们想要给猪安家。但是Andy没有足够的猪圈，很多猪只能够在一个猪圈安家。
+举个例子，假如有16头猪，Andy建了3个猪圈，为了保证公平，剩下1头猪就没有地方安家了。
+Mary生气了，骂Andy没有脑子，并让他重新建立猪圈。这回Andy建造了5个猪圈，但是仍然有1头猪没有地方去，
+然后Andy又建造了7个猪圈，但是还有2头没有地方去。Andy都快疯了。你对这个事情感兴趣起来，
+你想通过Andy建造猪圈的过程，知道Andy家至少养了多少头猪。
+
+输入
+
+第一行包含一个整数n (n <= 10) – Andy建立猪圈的次数，
+解下来n行，每行两个整数ai, bi( bi <= ai <= 1000), 表示Andy建立了ai个猪圈，有bi头猪没有去处。
+
+输出
+输出包含一个正整数，即为Andy家至少养猪的数目。
+
+样例输入
+3
+3  1
+5  1
+7  2
+样例输出
+16
+//CODE
+#include<cstdio>
+
+int main()
+{
+	int number,*a,*b;
+	int sum=0,index=1,i;
+
+	scanf("%d",&number);
+	a=new int[number];
+	b=new int[number];
+	for(i=0;i<number;i++)
+		scanf("%d %d",&a[i],&b[i]);
+	while(true){
+		sum=a[0]*index+b[0];
+		for(i=1;i<number-1;i++){
+			if(b[i]==sum%a[i])
+				continue;
+			else 
+				break;
+		}
+		if(i>=number-1)
+			break;
+		index++;
+	}
+	printf("%d\n",sum);
+	return 0;
+}

@@ -1,0 +1,60 @@
+﻿题目描述
+这是一个古老而又经典的问题。用给定的几种钱币凑成某个钱数，一般而言有多种方式。例如：给定了6种钱币面值为2、5、10、20、50、100，用来凑 15元，可以用5个2元、1个5元，或者3个5元，或者1个5元、1个10元，等等。显然，最少需要2个钱币才能凑成15元。
+你的任务就是，给定若干个互不相同的钱币面值，编程计算，最少需要多少个钱币才能凑成某个给出的钱数。
+输入
+输入可以有多个测试用例。每个测试用例的第一行是待凑的钱数值M（1 <= M <= 2000，整数），接着的一行中，第一个整数K（1 <= K <= 10）表示币种个数，随后是K个互不相同的钱币面值Ki(1 <= Ki <= 1000)。输入M=0时结束。
+
+输出
+每个测试用例输出一行，即凑成钱数值M最少需要的钱币个数。如果凑钱失败，输出“Impossible”。你可以假设，每种待凑钱币的数量是无限多的。
+
+样例输入
+15
+6 2 5 10 20 50 100
+1
+1 2
+0
+
+样例输出
+2
+Impossible
+
+//CODE
+#include<cstdio>
+#include<cassert>
+
+int main(){
+	int *money_dp,*money_num;
+	int money_count,money_value_count;
+	int temp,i,j;
+
+	while(scanf("%d",&money_count) && money_count!=0){
+		assert(money_count>=1 && money_count<=2000);
+
+		scanf("%d",&money_value_count);
+		assert(money_value_count>=1 && money_value_count<=10);
+
+		money_num=new int[money_value_count];
+		money_dp=new int[money_count+1];
+
+		for(i=0;i<money_value_count;i++){
+			scanf("%d",&temp);
+			assert(temp>=1 && temp<=1000);
+			money_num[i]=temp;
+		}
+		money_dp[0]=0;
+		for(i=1;i<=money_count;i++){
+			money_dp[i]=2001;
+		}
+
+		for(i=1;i<=money_count;i++){
+		   for(j=0;j<money_value_count;j++)
+			   if(money_num[j]<=i && money_dp[i-money_num[j]]+1 < money_dp[i])
+				   money_dp[i]=money_dp[i-money_num[j]]+1;
+		}
+		if(2001!=money_dp[money_count])
+		  printf("%d\n",money_dp[money_count]);
+		else
+		  printf("Impossible\n");
+	}
+	return 0;
+}

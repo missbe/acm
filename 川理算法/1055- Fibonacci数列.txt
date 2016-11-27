@@ -1,0 +1,41 @@
+﻿题目描述
+Fibonacci数列定义如下：a[1]=1；a[2]=1；a[n]=a[n-1]+a[n-2]（n>2）。对于给定N(1≤N≤10000)，请判别数列第N项的奇偶性。
+
+输入
+给定整数N，如N=0则结束输入（N=0不需要判断）。
+输出
+输出第N项Fibonacci数列的奇偶性，如果为奇数则请输出“ODD”，否则为“EVEN”。
+样例输入
+1
+2
+3
+0
+样例输出
+ODD
+ODD
+EVEN
+//CODE
+#include<cstdio>
+#include<cassert>
+
+int main(){
+	int N,i;
+	int num[1001];
+
+	while(scanf("%d",&N) && N!=0)
+	{
+		assert(N>=1 && N<=1000);
+		 num[0]=1,num[1]=1;
+		 if(1==N || 2==N){
+		   printf("ODD\n");
+		   continue;
+		 }
+	     for(i=2;i<N;i++)
+		   num[i]=num[i-1]+num[i-2];
+	     if(1==num[N-1]%2)
+		   printf("ODD\n");
+	     else
+	  	   printf("EVEN\n");
+	}
+    return 0;
+}

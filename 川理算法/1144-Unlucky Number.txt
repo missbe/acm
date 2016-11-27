@@ -1,0 +1,38 @@
+﻿题目描述
+In China, Four is associated with death because the Chinese word for four sounds like the one for dead.So for some Chinese, four is not a lucky number. In this problem,we define an integer number containing at least one digit 4 as an unlucky number,such as 4,412,1944. How many unlucky numbers in rang[M,N]?
+输入
+Input contains multiple test cases. Each test case has only one line containing two integers M,N,separated by one Space.(0≤M≤N≤1050)
+输出
+Output the number of unlucky numbers in range[M,N] on a single line for each test case.
+样例输入
+1   10
+30  50
+样例输出
+1
+11
+//CODE
+#include<cstdio>
+
+int main()
+{
+	int m,n,temp;
+	int i;
+	int count,flag;
+
+	while(scanf("%d %d",&m,&n)!=EOF){
+		count=0;
+	   for(i=m;i<=n;i++){
+		temp=i;
+		while(temp){			
+		    flag=temp%10;
+			if(flag==4){
+				count++;
+				break;
+			}
+			temp /= 10;
+		}
+	   }
+	  printf("%d\n",count);
+	}
+	return 0;
+}
